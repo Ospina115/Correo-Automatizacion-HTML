@@ -1,231 +1,344 @@
-# 📧 Correo Automatización HTML - Cajasan
+# 📧 Sistema de Envío Automatizado de Correos
+
+<div align="center">
+
+![Cajasan](https://img.shields.io/badge/Cajasan-Santander-1e5aa8?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Oracle](https://img.shields.io/badge/Oracle-Database-F80000?style=for-the-badge&logo=oracle&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Activo-success?style=for-the-badge)
+
+</div>
+
+---
 
 ## 📋 Descripción
 
-Este repositorio contiene plantillas HTML optimizadas para el envío de correos electrónicos corporativos de **Cajasan - Caja de Ahorro y Crédito de Santander**. Las plantillas están diseñadas siguiendo las mejores prácticas para emails HTML, garantizando compatibilidad con los principales clientes de correo electrónico.
+Sistema automatizado de envío de correos electrónicos para nuevas empresas matriculadas. 
 
-Específicamente, este proyecto automatiza el envío de correos a nuevas empresas de Santander, presentando los servicios y beneficios que Cajasan ofrece al sector empresarial.
+El sistema consulta automáticamente la base de datos Oracle, obtiene las empresas matriculadas en la semana anterior y les envía correos de bienvenida personalizados con información sobre beneficios empresariales, registrando el estado de cada envío.
 
-## 🎯 Características
+---
 
-- ✅ **Compatible con múltiples clientes de correo**: Gmail, Outlook, Apple Mail, etc.
-- ✅ **Diseño responsivo**: Se adapta a diferentes tamaños de pantalla
-- ✅ **Estructura basada en tablas**: Máxima compatibilidad con clientes antiguos
-- ✅ **Estilos inline**: CSS incorporado directamente en las etiquetas HTML
-- ✅ **Identidad corporativa**: Colores y elementos visuales de Cajasan
-- ✅ **Variables dinámicas**: Placeholders para personalización automática
-- ✅ **Optimizado para bots**: Integración con sistemas de automatización
+## 🎯 Características Principales
 
-## 🎨 Identidad Visual
+- ✅ **Consulta automática a Oracle DB** - Obtiene empresas de la semana anterior
+- ✅ **Envío masivo personalizado** - Correos personalizados por empresa
+- ✅ **Autenticación Bearer Token** - Seguridad en todas las APIs
+- ✅ **Conversión HTML a Base64** - Procesamiento de plantillas HTML
+- ✅ **Gestión de caracteres especiales** - Soporte completo para español (á, é, í, ó, ú, ñ)
+- ✅ **Confirmación de envío en BD** - Registro del estado de cada correo
+- ✅ **URLs de seguimiento** - Links dinámicos con matrícula para tracking
+- ✅ **Manejo robusto de errores** - Validaciones y recuperación ante fallos
+- ✅ **Copia automática** - Envío de copia a correo corporativo
 
-La plantilla sigue el manual de identidad visual de Cajasan:
-
-- **Color principal**: `#1e5aa8` (Azul Cajasan)
-- **Color secundario**: `#2a6bb8` (Azul claro)
-- **Tipografía**: Arial, sans-serif (para máxima compatibilidad)
-- **Elementos**: Logo oficial, slogan corporativo, íconos descriptivos
+---
 
 ## 📁 Estructura del Proyecto
 
 ```
 Correo-Automatizacion-HTML/
 │
-├── index.html                          # Plantilla principal para correos empresariales
-├── README.md                           # Este archivo
-└── CM-MPP-M002 MANUAL DE IDENTIDAD VISUAL CAJASAN v 2 (1).pdf
+├── Main.py                          # 🚀 Punto de entrada principal
+│
+├── API/                             # 📡 Módulos de integración API
+│   ├── send_email.py                #    └─ Envío de correos
+│   ├── ObtenerToken.py              #    └─ Autenticación Bearer
+│   └── ConfirmaEnvio.py             #    └─ Confirmación en BD
+│
+├── Database/                        # 🗄️ Conexión y consultas Oracle
+│   └── OracleConnection.py          #    └─ Gestión de BD
+│
+├── HTML/                            # 🎨 Procesamiento de plantillas
+│   ├── Base64Converter.py           #    └─ Conversión HTML → Base64
+│   └── index.html                   #    └─ Plantilla de correo
+│
+├── .env                             # 🔐 Variables de entorno (credenciales)
+├── requirements.txt                 # 📦 Dependencias Python
+└── README.md                        # 📖 Este archivo
 ```
 
-## 🔧 Variables Dinámicas
+---
 
-La plantilla utiliza las siguientes variables que pueden ser reemplazadas dinámicamente:
+## 🔧 Tecnologías Utilizadas
 
-### Variables Principales
-- `{{COMPANY_NAME}}` - Nombre de la empresa destinataria
-- `{{CONTACT_EMAIL}}` - Email de contacto de Cajasan
-- `{{CONTACT_PHONE}}` - Teléfono de contacto
-- `{{CONTACT_ADDRESS}}` - Dirección física
-- `{{CURRENT_YEAR}}` - Año actual
-- `{{EMAIL_TIMESTAMP}}` - Fecha y hora de envío
+| Tecnología        | Versión | Propósito                       |
+| ----------------- | ------- | ------------------------------- |
+| **Python**        | 3.13+   | Lenguaje principal              |
+| **oracledb**      | 2.0+    | Cliente Oracle Database         |
+| **requests**      | 2.31+   | Llamadas HTTP a APIs            |
+| **python-dotenv** | 1.0+    | Gestión de variables de entorno |
 
-### Variables Opcionales
-- `{{ADDITIONAL_INFO}}` - Información adicional personalizada
-- `{{SHOW_ADDITIONAL_INFO}}` - Mostrar/ocultar sección adicional
+---
 
-## 💼 Casos de Uso
+## 📦 Instalación
 
-### 1. Presentación de Servicios Empresariales
-Correo para nuevas empresas presentando los servicios de Cajasan:
-- 💰 Descuento por nómina
-- 📊 Ahorro empresarial
-- 🏦 Créditos corporativos
-- 👥 Programas de bienestar para colaboradores
+### 1️⃣ Clonar el repositorio
 
-### 2. Comunicaciones Corporativas
-- Anuncios de nuevos productos
-- Invitaciones a eventos empresariales
-- Boletines informativos
-- Seguimiento a clientes corporativos
-
-## 🚀 Cómo Usar
-
-### Opción 1: Uso Manual
-
-1. Abre `index.html` en un editor de texto
-2. Reemplaza las variables `{{VARIABLE_NAME}}` con los valores reales
-3. Copia el código HTML resultante
-4. Pégalo en tu cliente de correo o plataforma de email marketing
-
-### Opción 2: Automatización con Script
-
-```javascript
-// Ejemplo en Node.js
-const fs = require('fs');
-
-// Leer la plantilla
-let template = fs.readFileSync('index.html', 'utf8');
-
-// Reemplazar variables
-const datos = {
-  COMPANY_NAME: 'Empresa XYZ S.A.S.',
-  CONTACT_EMAIL: 'empresas@cajasan.com',
-  CONTACT_PHONE: '(607) 123 4567',
-  CONTACT_ADDRESS: 'Calle 35 # 10-43, Bucaramanga',
-  CURRENT_YEAR: new Date().getFullYear(),
-  EMAIL_TIMESTAMP: new Date().toLocaleDateString('es-CO')
-};
-
-Object.keys(datos).forEach(key => {
-  const regex = new RegExp(`{{${key}}}`, 'g');
-  template = template.replace(regex, datos[key]);
-});
-
-// Guardar o enviar el email procesado
-fs.writeFileSync('email_personalizado.html', template);
+```bash
+git clone https://github.com/Ospina115/Correo-Automatizacion-HTML.git
+cd Correo-Automatizacion-HTML
 ```
 
-### Opción 3: Integración con Plataformas de Email
+### 2️⃣ Instalar dependencias
 
-#### Mailchimp
-1. Crea una nueva campaña
-2. Selecciona "Code your own"
-3. Pega el código HTML
-4. Usa merge tags de Mailchimp: `*|COMPANY_NAME|*`
-
-#### SendGrid
-1. Crea una nueva plantilla dinámica
-2. Pega el HTML
-3. Define las variables en el panel de SendGrid
-
-#### Outlook / Office 365
-1. Abre el HTML en un navegador
-2. Copia el contenido renderizado (Ctrl+A, Ctrl+C)
-3. Pega en un nuevo correo de Outlook
-
-## 📱 Pruebas de Compatibilidad
-
-Se recomienda probar la plantilla en:
-
-- ✅ Gmail (Web, iOS, Android)
-- ✅ Outlook (Web, Desktop, iOS, Android)
-- ✅ Apple Mail (macOS, iOS)
-- ✅ Yahoo Mail
-- ✅ Thunderbird
-
-### Herramientas de Prueba Recomendadas
-
-- [Litmus](https://www.litmus.com/) - Testing de emails en múltiples clientes
-- [Email on Acid](https://www.emailonacid.com/) - Análisis y pruebas
-- [HTML Email Check](https://www.htmlemailcheck.com/check/) - Validación gratuita
-
-## 🔒 Mejores Prácticas
-
-1. **Evita JavaScript**: Los clientes de correo lo bloquean
-2. **Usa tablas para layout**: Mayor compatibilidad que CSS Grid/Flexbox
-3. **Estilos inline**: Evita `<style>` tags externos
-4. **Imágenes hosteadas**: Usa URLs absolutas (CDN recomendado)
-5. **Texto alternativo**: Siempre incluye `alt` en imágenes
-6. **Tamaño máximo**: Mantén el HTML bajo 102KB
-7. **Texto plano**: Incluye versión de texto plano como fallback
-
-## 🖼️ Gestión de Imágenes
-
-Las imágenes deben estar alojadas en servidores externos:
-
-```html
-<!-- Ejemplo actual -->
-<img src="https://res.cloudinary.com/df84r8tny/image/upload/v1751918973/LOGO_CAJASAN_LOGO_VRT-BLANCO_u7krqi.png" 
-     alt="Cajasan" 
-     width="120" />
+```bash
+pip install -r requirements.txt
 ```
 
-### Recomendaciones
-- Usa servicios CDN: Cloudinary, ImgIX, AWS S3
-- Optimiza las imágenes (compresión, tamaño adecuado)
-- Usa formatos compatibles: JPG, PNG, GIF
-- Evita: SVG, WebP (compatibilidad limitada)
+### 3️⃣ Configurar variables de entorno
 
-## 📊 Métricas y Seguimiento
+Crea o edita el archivo `.env` con las siguientes credenciales:
 
-Para trackear la efectividad de los emails:
+```env
+# -----------------------------
+# Endpoints de las APIs
+# -----------------------------
+API_TOKEN_URL=https:api/para/obtener/token
+API_FSEND_CORREO=https:api/para/enviar/correo
+API_CONFIRMA_WHATS=https:api/para/confirmar/interaccion/usuario
+API_CONFIRMA_ENVIO_URL=https:api/para/confirmar/envio/correo
 
-```html
-<!-- Pixel de seguimiento (opcional) -->
-<img src="https://tu-servidor.com/track?email={{EMAIL_ID}}" 
-     width="1" height="1" style="display:none;" />
+# -----------------------------
+# Credenciales de Autenticación
+# -----------------------------
+AUTH_USERNAME=tu_usuario
+AUTH_PASSWORD=tu_contraseña
 
-<!-- Links con parámetros UTM -->
-<a href="https://www.cajasan.com?utm_source=email&utm_medium=corporativo&utm_campaign=nuevas_empresas">
-  Visita nuestro sitio web
-</a>
+# -----------------------------
+# Configuración de Api que envia correos
+# -----------------------------
+FSEND_EMAIL_COPIA=correocopia@prueba.com
+
+# -----------------------------
+# Configuración de Base de Datos
+# -----------------------------
+ORACLE_USER=tu_usuario
+ORACLE_PASSWORD=tu_password
+ORACLE_HOST=123.123.123
+ORACLE_PORT=0000
+ORACLE_SID=SIDDATABASE
 ```
 
-## 🛠️ Personalización Avanzada
+---
 
-### Agregar Nueva Sección
+## 🚀 Uso
 
-```html
-<!-- Nueva sección después de servicios -->
-<tr>
-  <td style="padding-bottom: 25px">
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-           style="background-color: #ffffff; border-radius: 8px; border: 1px solid #e9ecef;">
-      <tr>
-        <td style="padding: 25px;">
-          <h3 style="margin: 0 0 15px 0; font-size: 18px; font-weight: bold; color: #1e5aa8;">
-            🎯 Tu Título Aquí
-          </h3>
-          <p style="margin: 0; font-size: 15px; color: #333333; line-height: 1.6;">
-            Tu contenido aquí
-          </p>
-        </td>
-      </tr>
-    </table>
-  </td>
-</tr>
+### Ejecución del sistema
+
+```bash
+python Main.py
 ```
 
-### Cambiar Colores
+### Salida esperada
 
-Para actualizar los colores corporativos, busca y reemplaza:
-- `#1e5aa8` → Color principal
-- `#2a6bb8` → Color secundario
-- `#e6f2ff` → Color texto claro
-- `#f8f9fa` → Color fondo
+```
+================================================================================
+SISTEMA DE ENVÍO DE CORREOS - EMPRESAS NUEVAS
+================================================================================
 
-## 📞 Contacto y Soporte
+Conectando a la base de datos Oracle...
+✓ Conexión exitosa a Oracle Database
 
-**Cajasan - Caja de Ahorro y Crédito de Santander**
+Ejecutando consulta...
+✓ Se encontraron 5 empresa(s) matriculada(s) la semana anterior
 
-- 📞 Línea Nacional: 018000 960 960
-- 📧 Email: servicioalcliente@cajasan.com
-- 🌐 Web: [www.cajasan.com](https://www.cajasan.com)
-- 📍 Dirección: Bucaramanga, Santander, Colombia
+✓ Conexión cerrada
 
-## 📄 Licencia
+================================================================================
+PROCESANDO 5 EMPRESA(S)
+================================================================================
 
-Este proyecto es propiedad de **Cajasan**. Uso interno exclusivo para comunicaciones oficiales de la organización.
+[1/5] Procesando:
+  • Empresa: EMPRESA EJEMPLO S.A.S
+  • Matrícula: 123456
+  • Correo: contacto@empresaejemplo.com
+  ✓ El ingreso se realizo correctamente: 1 Registros en la orden #...
+  ℹ Confirmando envío en BD...
+  ✓ Confirmación registrada en BD
+
+[2/5] Procesando:
+  ...
+
+================================================================================
+RESUMEN DE ENVÍO
+================================================================================
+Total procesadas: 5
+Exitosos: 5
+Fallidos: 0
+================================================================================
+```
+
+---
+
+## 🔄 Flujo de Trabajo
+
+```mermaid
+graph TD
+    A[Iniciar Main.py] --> B[Conectar a Oracle DB]
+    B --> C[Consultar empresas semana anterior]
+    C --> D{¿Hay empresas?}
+    D -->|No| E[Finalizar]
+    D -->|Sí| F[Iterar cada empresa]
+    F --> G[Obtener Bearer Token]
+    G --> H[Convertir HTML a Base64]
+    H --> I[Enviar correo vía API]
+    I --> J{¿Envío exitoso?}
+    J -->|Sí| K[Confirmar envío en BD estado='s']
+    J -->|No| L[Registrar fallo en BD estado='n']
+    K --> M{¿Más empresas?}
+    L --> M
+    M -->|Sí| F
+    M -->|No| N[Mostrar resumen]
+    N --> E
+```
+
+---
+
+## 📧 Plantilla de Correo
+
+### Variables dinámicas
+
+La plantilla HTML (`HTML/index.html`) utiliza las siguientes variables:
+
+| Variable           | Descripción          | Ejemplo                            |
+| ------------------ | -------------------- | ---------------------------------- |
+| `{{COMPANY_NAME}}` | Nombre de la empresa | "EMPRESA EJEMPLO S.A.S"            |
+| Link del botón     | URL con matrícula    | `{API_CONFIRMA_WHATS}/{matricula}` |
+
+### Características de la plantilla
+
+- 🎨 **Diseño responsivo** - Compatible con todos los clientes de correo
+- 📱 **Mobile-friendly** - Optimizado para dispositivos móviles
+- 🔤 **Entidades HTML** - Caracteres especiales convertidos (á → &aacute;)
+- 🔗 **Link de seguimiento** - Botón con URL personalizada por matrícula
+- 🖼️ **Imágenes optimizadas** - Logo y elementos visuales Cajasan
+
+---
+
+## 🔐 Seguridad
+
+- 🔒 **Autenticación Bearer Token** - Todas las APIs requieren token
+- 🔑 **Variables de entorno** - Credenciales nunca en código fuente
+- ⚠️ **SSL Verification** - `verify=False` solo para APIs internas
+- 🛡️ **Manejo de errores** - No expone información sensible
+
+> **Nota**: El proyecto usa `verify=False` porque las APIs internas de Cajasan tienen certificados autofirmados. En producción con APIs públicas, esto debe cambiarse a `verify=True`.
+
+---
+
+## 🗄️ Base de Datos
+
+### Consulta utilizada
+
+```sql
+SELECT * FROM database.table
+WHERE TO_CHAR(FECHA_MATRICULA,'IYYYIW') = TO_CHAR(SYSDATE,'IYYYIW') - 1
+```
+
+### Campos utilizados
+
+- `RAZON_SOCIAL` - Nombre de la empresa
+- `MATRICULA` - Número de matrícula
+- `CORREO` - Email de contacto
+
+---
+
+## 📊 APIs Utilizadas
+
+### 1. API de Autenticación
+
+- **Endpoint**: `API_TOKEN_URL`
+- **Método**: POST
+- **Retorna**: Bearer Token
+
+### 2. API de Envío de Correos
+
+- **Endpoint**: `API_FSEND_CORREO`
+- **Método**: POST
+- **Auth**: Bearer Token
+- **Payload**:
+  
+  ```json
+  {
+    "producto_cobro": "Payload",
+    "email": "destinatario@ejemplo.com;copia@prueba.com",
+    "asunto": "Bienvenido...",
+    "body_base64": "PGh0bWw+Li4uPC9odG1sPg=="
+  }
+  ```
+
+### 3. API de Confirmación de Envío
+
+- **Endpoint**: `API_CONFIRMA_ENVIO_URL/{matricula}/{estado}`
+- **Método**: GET
+- **Auth**: Bearer Token
+- **Estados**: 
+  - `s` = Enviado exitosamente
+  - `n` = Error en el envío
+
+---
+
+## ⚠️ Manejo de Errores
+
+El sistema maneja los siguientes escenarios:
+
+| Error                        | Acción                                            |
+| ---------------------------- | ------------------------------------------------- |
+| **Empresa sin correo**       | Se omite y se registra como fallido               |
+| **Error 500 (API)**          | Se identifica como posible error de autenticación |
+| **Timeout**                  | Se registra y continúa con la siguiente empresa   |
+| **Error de conexión**        | Se registra y continúa                            |
+| **Fallo en confirmación BD** | Se marca como advertencia (correo enviado)        |
+
+---
+
+## 📈 Estadísticas
+
+Al finalizar, el sistema muestra:
+
+- ✅ **Total procesadas** - Cantidad de empresas consultadas
+- ✅ **Exitosos** - Correos enviados correctamente
+- ❌ **Fallidos** - Correos que no se pudieron enviar
+- ⚠️ **Errores de autenticación** - Fallos 500 del servidor
+
+---
 
 ## 🤝 Contribuciones
+
+Este proyecto es de uso interno de **Cajasan**. Para contribuciones o mejoras, contactar al equipo de desarrollo.
+
+---
+
+## 👨‍💻 Autor
+
+**Samuel Ospina - Desarrollador**
+
+- 📧 Email: Ospina31@icloud.com
+- 🌐 Web: [www.cajasan.com](https://www.cajasan.com)
+
+---
+
+## 📝 Licencia
+
+Proyecto de uso interno - Cajasan © 2025
+
+---
+
+<div align="center">
+
+**Hecho con ❤️ para Cajasan - Santander**
+
+
+
+
+
+
+
+### 
+
+1. Pega el HTML
+2. `#1e5aa8` → Color principal
+- 
 
 Para sugerencias o mejoras:
 
@@ -244,6 +357,7 @@ Para sugerencias o mejoras:
 ## 📅 Historial de Versiones
 
 ### v1.1.0 (2025-01-07)
+
 - ✨ Actualización completa para correos a nuevas empresas
 - ✨ Sección de servicios empresariales detallada
 - ✨ Call-to-action con email personalizable
@@ -252,6 +366,7 @@ Para sugerencias o mejoras:
 - 📝 README completo y documentación extendida
 
 ### v1.0.0 (Inicial)
+
 - ✨ Plantilla base para automatización de correos
 
 ---
