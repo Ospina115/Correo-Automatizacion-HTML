@@ -70,7 +70,8 @@ def obtener_empresas_semana_anterior():
         
         # Ejecutar consulta
         query = """
-            SELECT MATRICULA, RAZON_SOCIAL, NIT, CORREO, FECHA_MATRICULA, MAIL_ENVIA, MAIL_CONFIRMA FROM sismemp.V_BI_COMPITE360 
+            SELECT MATRICULA, RAZON_SOCIAL, NIT, CORREO, FECHA_MATRICULA, MAIL_ENVIA, MAIL_CONFIRMA 
+            FROM sismemp.V_BI_COMPITE360
             WHERE TO_CHAR(FECHA_MATRICULA,'IYYYIW') = TO_CHAR(SYSDATE,'IYYYIW') - 1
         """
         

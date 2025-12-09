@@ -43,6 +43,41 @@ def convertir_caracteres_especiales_a_html(texto):
     return texto_convertido
 
 
+def convertir_html_completo_a_entidades(html):
+    """
+    Convierte todos los caracteres especiales del HTML completo a entidades HTML.
+    
+    Args:
+        html (str): Contenido HTML completo
+        
+    Returns:
+        str: HTML con todos los caracteres especiales convertidos a entidades
+    """
+    reemplazos = {
+        'á': '&aacute;',
+        'é': '&eacute;',
+        'í': '&iacute;',
+        'ó': '&oacute;',
+        'ú': '&uacute;',
+        'Á': '&Aacute;',
+        'É': '&Eacute;',
+        'Í': '&Iacute;',
+        'Ó': '&Oacute;',
+        'Ú': '&Uacute;',
+        'ñ': '&ntilde;',
+        'Ñ': '&Ntilde;',
+        '¡': '&iexcl;',
+        '¿': '&iquest;',
+        'ü': '&uuml;',
+        'Ü': '&Uuml;',
+    }
+    
+    for caracter, entidad in reemplazos.items():
+        html = html.replace(caracter, entidad)
+    
+    return html
+
+
 def convertir_html_a_base64(ruta_html, nombre_empresa, num_matricula):
     """
     Lee un archivo HTML y lo convierte a base64.
@@ -61,9 +96,8 @@ def convertir_html_a_base64(ruta_html, nombre_empresa, num_matricula):
         with open(ruta_html, 'r', encoding='utf-8') as archivo:
             contenido_html = archivo.read()
         
-        # Convertir caracteres especiales del nombre a entidades HTML
-        nombre_empresa_convertido = convertir_caracteres_especiales_a_html(nombre_empresa)
-        contenido_html = contenido_html.replace('{{COMPANY_NAME}}', nombre_empresa_convertido)
+        # Reemplazar el nombre de la empresa
+        contenido_html = contenido_html.replace('{{COMPANY_NAME}}', nombre_empresa)
         
         # URL de confirmación desde variable de entorno
         api_confirma_base = os.getenv("API_CONFIRMA_WHATS")
@@ -73,17 +107,20 @@ def convertir_html_a_base64(ruta_html, nombre_empresa, num_matricula):
         url_confirmacion = f"{api_confirma_base}/{num_matricula}"
         
         # Reemplazar el href del botón de acción
-        # Buscar específicamente el enlace dentro del botón CTA
+        # Buscar el patrón de enlace con "Contáctanos aquí" o variantes
         contenido_html = re.sub(
-            r'(<a[^>]*href=")[^"]*("(?:[^>]*>.*?Cont&aacute;ctanos aqu&iacute;|[^>]*>.*?Contáctanos aquí))',
+            r'(<a[^>]*href=")[^"]*(")',
             rf'\1{url_confirmacion}\2',
             contenido_html,
-            flags=re.DOTALL
+            count=1  # Solo reemplazar el primer enlace (el botón principal)
         )
         
-        # Convertir a bytes y luego a base64
-        contenido_bytes = contenido_html.encode('utf-8')
-        contenido_base64 = base64.b64encode(contenido_bytes).decode('utf-8')
+        # CLAVE: Convertir TODOS los caracteres especiales a entidades HTML
+        contenido_html = convertir_html_completo_a_entidades(contenido_html)
+        
+        # Ahora sí, convertir a base64 usando ASCII (las entidades HTML son ASCII puro)
+        contenido_bytes = contenido_html.encode('ascii', errors='xmlcharrefreplace')
+        contenido_base64 = base64.b64encode(contenido_bytes).decode('ascii')
         return contenido_base64
     except FileNotFoundError:
         raise Exception(f"No se encontró el archivo HTML: {ruta_html}")
