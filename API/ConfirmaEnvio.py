@@ -21,8 +21,8 @@ def confirmar_envio_email(num_matricula, estado):
     """
     try:
         # Validar estado
-        if estado not in ["s", "n"]:
-            raise ValueError("Estado debe ser 's' (enviado) o 'n' (no enviado)")
+        if estado not in ["S", "N"]:
+            raise ValueError("Estado debe ser 'S' (enviado) o 'N' (no enviado)")
         
         # Construir URL
         base_url = os.getenv("API_CONFIRMA_ENVIO_URL")

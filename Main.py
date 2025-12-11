@@ -33,8 +33,9 @@ def main():
         for i, empresa in enumerate(empresas, 1):
             try:
                 nombre_empresa = empresa.get('RAZON_SOCIAL')
-                num_matricula = str(empresa.get('MATRICULA'))
+                num_matricula = str(empresa.get('NIT'))
                 correo = empresa.get('CORREO')
+                nit = str(empresa.get('NIT'))
                 
                 # Validar que los datos necesarios existan
                 if not correo:
@@ -44,7 +45,7 @@ def main():
                 
                 print(f"[{i}/{len(empresas)}] Procesando:")
                 print(f"  • Empresa: {nombre_empresa}")
-                print(f"  • Matrícula: {num_matricula}")
+                print(f"  • NIT: {nit}")
                 print(f"  • Correo: {correo}")
                 
                 # Enviar correo
@@ -53,16 +54,16 @@ def main():
                     asunto="Bienvenido a Cajasan - Portal de Beneficios Empresariales",
                     html_path="HTML/index.html",
                     nombre_empresa=nombre_empresa,
-                    num_matricula=num_matricula
+                    num_matricula=nit #se actualizó para usar el nit en vez del numero de la matricula
                 )
                 
                 # Validar resultado
                 if resultado.get("exito"):
                     print(f"  ✓ {resultado.get('mensaje', 'Correo enviado exitosamente')}")
                     
-                    # Confirmar envío en la base de datos (estado "s" = enviado)
+                    # Confirmar envío en la base de datos (estado "S" = enviado)
                     print("  ℹ Confirmando envío en BD...")
-                    confirmacion = confirmar_envio_email(num_matricula, "s")
+                    confirmacion = confirmar_envio_email(num_matricula, "S")
                     
                     if confirmacion.get("exito"):
                         print("  ✓ Confirmación registrada en BD\n")
@@ -74,9 +75,9 @@ def main():
                 else:
                     fallidos += 1
                     
-                    # Registrar fallo en la base de datos (estado "n" = no enviado)
+                    # Registrar fallo en la base de datos (estado "N" = no enviado)
                     print("  ℹ Registrando fallo en BD...")
-                    confirmacion = confirmar_envio_email(num_matricula, "n")
+                    confirmacion = confirmar_envio_email(num_matricula, "N")
                     
                     # Identificar si es error de autenticación
                     if resultado.get("status_code") == 500:
